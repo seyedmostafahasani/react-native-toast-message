@@ -3,44 +3,31 @@
 
 @implementation ToastMessage
 
-RCT_EXPORT_MODULE()
+RCT_EXPORT_MODULE();
 
-- (dispatch_queue_t)methodQueue
+// Export a method that retrieves safe area insets
+RCT_EXPORT_METHOD(getSafeAreaInsets:(RCTResponseSenderBlock)callback)
 {
-    return dispatch_get_main_queue();
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIEdgeInsets safeAreaInsets = [self getSafeAreaInsets];
+        callback(@[@{
+            @"top": @(safeAreaInsets.top),
+            @"bottom": @(safeAreaInsets.bottom),
+            @"left": @(safeAreaInsets.left),
+            @"right": @(safeAreaInsets.right),
+        }]);
+    });
 }
 
-+ (BOOL)requiresMainQueueSetup
+// Helper method to get safe area insets
+- (UIEdgeInsets)getSafeAreaInsets
 {
-    return YES;
-}
-
-- (NSDictionary *)constantsToExport
-{
-    return self.getSafeAreaInsets;
-}
-
-- (NSDictionary *) getSafeAreaInsets
-{
+    UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
     if (@available(iOS 11.0, *)) {
-        return @{
-            @"safeAreaInsetsTop": @(UIApplication.sharedApplication.keyWindow.safeAreaInsets.top),
-            @"safeAreaInsetsBottom": @(UIApplication.sharedApplication.keyWindow.safeAreaInsets.bottom),
-            @"safeAreaInsetsLeft": @(UIApplication.sharedApplication.keyWindow.safeAreaInsets.left),
-            @"safeAreaInsetsRight": @(UIApplication.sharedApplication.keyWindow.safeAreaInsets.right)
-        };
+        return window.safeAreaInsets;
     } else {
-        return @{
-            @"safeAreaInsetsTop": @(0),
-            @"safeAreaInsetsBottom": @(0),
-            @"safeAreaInsetsLeft": @(0),
-            @"safeAreaInsetsRight": @(0),
-        };
+        return UIEdgeInsetsZero;
     }
-}
-
-RCT_EXPORT_METHOD(getSafeAreaInsets:(RCTResponseSenderBlock)callback){
-    callback(@[self.getSafeAreaInsets]);
 }
 
 @end
