@@ -1,30 +1,46 @@
-// ToastMessage.m
 #import "ToastMessage.h"
+#import <UIKit/UIKit.h>
 
 @implementation ToastMessage
 
-RCT_EXPORT_MODULE();
+RCT_EXPORT_MODULE()
 
-RCT_EXPORT_METHOD(getSafeAreaInsets:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+- (dispatch_queue_t)methodQueue
 {
-    @try {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
+    return dispatch_get_main_queue();
+}
 
-            if (@available(iOS 11.0, *)) {
-                safeAreaInsets = UIApplication.sharedApplication.keyWindow.safeAreaInsets;
-            }
++ (BOOL)requiresMainQueueSetup
+{
+    return YES;
+}
 
-            resolve(@{
-                @"top": @(safeAreaInsets.top),
-                @"left": @(safeAreaInsets.left),
-                @"bottom": @(safeAreaInsets.bottom),
-                @"right": @(safeAreaInsets.right)
-            });
-        });
-    } @catch (NSException *exception) {
-        reject(@"GET_SAFE_AREA_ERROR", exception.reason, nil);
+- (NSDictionary *)constantsToExport
+{
+    return self.getSafeAreaInsets;
+}
+
+- (NSDictionary *) getSafeAreaInsets
+{
+    if (@available(iOS 11.0, *)) {
+        return @{
+            @"safeAreaInsetsTop": @(UIApplication.sharedApplication.keyWindow.safeAreaInsets.top),
+            @"safeAreaInsetsBottom": @(UIApplication.sharedApplication.keyWindow.safeAreaInsets.bottom),
+            @"safeAreaInsetsLeft": @(UIApplication.sharedApplication.keyWindow.safeAreaInsets.left),
+            @"safeAreaInsetsRight": @(UIApplication.sharedApplication.keyWindow.safeAreaInsets.right)
+        };
+    } else {
+        return @{
+            @"safeAreaInsetsTop": @(0),
+            @"safeAreaInsetsBottom": @(0),
+            @"safeAreaInsetsLeft": @(0),
+            @"safeAreaInsetsRight": @(0),
+        };
     }
+}
+
+RCT_EXPORT_METHOD(getSafeAreaInsets:(RCTResponseSenderBlock)callback){
+    callback(@[self.getSafeAreaInsets]);
 }
 
 @end
