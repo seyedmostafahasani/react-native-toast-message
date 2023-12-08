@@ -1,12 +1,13 @@
 import React from 'react';
 
 import { useLogger } from './contexts';
-import {useSafeAreaInsets, useTimeout} from './hooks';
+import {useTimeout} from './hooks';
 import { ToastData, ToastOptions, ToastProps, ToastShowParams } from './types';
 import { noop } from './utils/func';
 import { mergeIfDefined } from './utils/obj';
-import {NativeModules} from "react-native";
+import { NativeModules } from 'react-native';
 
+const { RNToastMessage } = NativeModules;
 
 export const DEFAULT_DATA: ToastData = {
   text1: undefined,
@@ -33,8 +34,6 @@ export type UseToastParams = {
 
 export function useToast({ defaultOptions }: UseToastParams) {
   const { log } = useLogger();
-
-   useSafeAreaInsets();
 
   const [isVisible, setIsVisible] = React.useState(false);
   const [data, setData] = React.useState<ToastData>(DEFAULT_DATA);
