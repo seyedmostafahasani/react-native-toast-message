@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
 
   GitHub Repository: https://github.com/calintamas/react-native-toast-message
 DESC
-  s.homepage     = https://github.com/seyedmostafahasani/react-native-toast-message
+  s.homepage     = "https://github.com/seyedmostafahasani/react-native-toast-message"
   s.license      = package["license"]
   s.author       = { "author" => package["author"]["email"] }
   s.platform     = :ios, "9.0"
