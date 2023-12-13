@@ -5,22 +5,9 @@
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "files": [
-    "src",
-    "lib",
-    "android",
+    "/lib",
     "ios",
-    "cpp",
-    "*.podspec",
-    "!ios/build",
-    "!android/build",
-    "!android/gradle",
-    "!android/gradlew",
-    "!android/gradlew.bat",
-    "!android/local.properties",
-    "!**/__tests__",
-    "!**/__fixtures__",
-    "!**/__mocks__",
-    "!**/.*"
+    "*.podspec"
   ],
   "repository": {
     "type": "git",
