@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SafeArea } from '../SafeAreaModule'; // Replace with the actual path to your module
+import SafeAreaModule, { SafeArea } from '../SafeAreaModule'; // Replace with the actual path to your module
 
 interface SafeAreaInsets {
 	top: number;
@@ -8,17 +8,19 @@ interface SafeAreaInsets {
 	right: number;
 }
 
-export function useSafeArea(): SafeAreaInsets | null {
-	const [safeAreaInsets, setSafeAreaInsets] = useState<SafeAreaInsets | null>(null);
+export function useSafeArea(): SafeAreaInsets | undefined {
+	const [safeAreaInsets, setSafeAreaInsets] = useState<SafeAreaInsets | undefined>(undefined);
 
 	useEffect(() => {
 		const fetchSafeAreaInsets = async () => {
-			try {
-				const insets = await SafeArea.getSafeAreaInsets();
-				setSafeAreaInsets(insets);
-			} catch (error) {
-				console.error('Error fetching safe area insets:', error);
-			}
+			SafeArea.getSafeAreaInsets((error, result) => {
+				if (error) {
+					console.error(error);
+				} else {
+					console.log(result);
+					setSafeAreaInsets(result)
+				}
+			});
 		};
 
 		fetchSafeAreaInsets();
