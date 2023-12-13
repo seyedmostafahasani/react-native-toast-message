@@ -185,3 +185,14 @@ export type ToastProps = {
    */
   onPress?: () => void;
 };
+
+export type SafeAreaInsets = {
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+}
+
+export type SafeAreaModuleTyp = {
+  getSafeAreaInsets(callback: (error: Error | null, result?: SafeAreaInsets) => void): void;
+}

@@ -1,6 +1,0 @@
-framework module Pods_RNToastMessage {
-  umbrella header "Pods-RNToastMessage-umbrella.h"
-
-  export *
-  module * { export * }
-}
