@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.description  = <<-DESC
   React Native Toast Message is a customizable and easy-to-use library for displaying toast notifications in React Native applications. It provides a simple interface for showing short-lived messages to users, making it perfect for alerts, notifications, or feedback.
 
-  GitHub Repository: https://github.com/calintamas/react-native-toast-message
+  GitHub Repository: https://github.com/seyedmostafahasani/react-native-toast-message
 DESC
   s.homepage     = "https://github.com/seyedmostafahasani/react-native-toast-message"
   s.license      = package["license"]
